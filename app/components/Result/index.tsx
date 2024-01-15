@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Table,
   TableBody,
@@ -13,25 +15,35 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { getData } from "@/api";
-import { useEffect, useState } from "react";
+import { CopyIcon } from "@radix-ui/react-icons";
+import { Toaster, toast } from "sonner";
+import { copyText } from "@/helper/copy";
+import { useSelector } from "react-redux";
+import { type RootState } from "@/redux/store";
 
-export default function Result() {
-  const [urls, setUrls] = useState([]);
-  const handleCopyURL = () => {
-    return;
+export default function Result({ id }: any) {
+  const handleCopyURL = (shortUrl: string) => {
+    copyText(shortUrl);
+    toast("Copied!");
   };
-  useEffect(() => {
-    const data = getData();
-    data.then((res: any) => {
-      setUrls(res.data);
-    });
-  }, []);
+
+  const shortenedLinks = useSelector(
+    (state: RootState) => state.shortenedLinks
+  );
+
+  const { og_url, short_url }: any = shortenedLinks || {};
 
   return (
-    <div className="w-screen md:w-1/2 px-6 pt-6">
+    <div
+      className="w-screen md:w-10/12 px-6 pt-6 lg:relative lg:bottom-10"
+      id={id}
+    >
       <Table>
-        <TableCaption>Here are your shortened links</TableCaption>
+        <TableCaption>
+          {short_url
+            ? "Here is your shortened link!"
+            : "Generate a short link above!"}
+        </TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">Original URL</TableHead>
@@ -39,23 +51,26 @@ export default function Result() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {urls?.map(({ id, ogUrl, shortUrl }) => (
-            <TableRow key={id}>
-              <TableCell>{ogUrl}</TableCell>
-              <TableCell className="text-right">
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <p onClick={handleCopyURL}>{shortUrl}</p>
-                    </TooltipTrigger>
-                    <TooltipContent>Click to Copy</TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </TableCell>
-            </TableRow>
-          ))}
+          <TableRow key={id}>
+            <TableCell>{og_url}</TableCell>
+            <TableCell className="flex justify-end items-center gap-3 text-right">
+              <p>{short_url}</p>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <CopyIcon
+                      className="w-4 h-4 cursor-pointer"
+                      onClick={() => handleCopyURL(short_url)}
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>Click to Copy</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
+      <Toaster />
     </div>
   );
 }

@@ -24,7 +24,6 @@ function TextInput({
       name={name}
       placeholder={placeholder}
       onChange={onChange}
-      className="mb-3"
       onKeyDown={onKeyDown}
     />
   );

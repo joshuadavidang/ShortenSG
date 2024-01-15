@@ -1,4 +1,10 @@
 function isValidUrl(url: string): boolean {
+  const protocols = ["https", "http"];
+  for (let protocol of protocols) {
+    if (!url.includes(protocol)) {
+      return false;
+    }
+  }
   const pattern = new RegExp(
     "^([a-zA-Z]+:\\/\\/)?" + // protocol
       "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name

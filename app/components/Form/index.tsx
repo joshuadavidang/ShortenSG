@@ -1,20 +1,23 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { TextInput } from "@/components/Input";
-import { useState } from "react";
-import { ValidateData, ShortenUrl } from "@/actions/formAction";
-import SubmitButton from "./SubmitButton";
+import { GenerateShortUrl, isUrlAvailable } from "@/api";
+import { DotsHorizontalIcon, Link2Icon } from "@radix-ui/react-icons";
+import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
-import { postData } from "@/api";
+import { isValidUrl, smoothScrollTo, validateFormLength } from "@/helper";
+import { useDispatch } from "react-redux";
+import { setData } from "@/redux/features/url/urlSlice";
 
 export default function Form() {
   const ref = useRef<HTMLFormElement>(null);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
   const [formValues, setFormValues] = useState({
     originalURL: "",
-    newDomain: "",
-    alias: "",
   });
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,19 +29,33 @@ export default function Form() {
   };
 
   const submitUrl = async (formData: FormData) => {
-    const result = await ValidateData(formData);
-    console.log(result);
-    if (!result) return toast("Invalid data");
+    const url = formData.get("originalURL") as string;
+    const userInput = validateFormLength(url);
 
-    const shortenLink = await ShortenUrl(formData);
-    if (!shortenLink) return toast("error");
-    console.log(shortenLink);
+    if (!userInput) return toast("Please enter a value!");
 
-    const submission = await postData(formValues.originalURL, shortenLink);
-    if (!submission) return toast("error");
+    const result = isValidUrl(url);
+    if (!result) return toast("Ensure that the entered link is valid!");
 
-    ref.current?.reset();
-    toast("Check out your links below");
+    setLoading(true);
+    smoothScrollTo("result");
+    setTimeout(async () => {
+      const response = await isUrlAvailable(formData);
+      const { status, result } = response.data;
+
+      if (status === "Available") {
+        toast("Check out the short link");
+        dispatch(setData(result));
+      } else {
+        toast("Short link generated!");
+        const generatedData = await GenerateShortUrl(formData);
+        const { result } = generatedData.data;
+        dispatch(setData(result));
+      }
+
+      setLoading(false);
+      ref.current?.reset();
+    }, 500);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<any>): void => {
@@ -49,37 +66,28 @@ export default function Form() {
   };
 
   return (
-    <div className="w-screen md:w-1/2 px-6 pt-6">
-      <form ref={ref} action={submitUrl}>
-        <TextInput
-          type="text"
-          name="originalURL"
-          placeholder="Paste your long url here"
-          value={formValues.originalURL}
-          onChange={onChange}
-          onKeyDown={handleKeyDown}
-        />
-        {/* <div className="flex flex-col md:flex-row md:gap-5 items-center">
+    <div className="lg:w-10/12 md:p-16 md:bg-blue rounded-2xl">
+      <form ref={ref} action={submitUrl} className="flex flex-col gap-3">
+        <div className="flex justify-center items-center gap-3 mb-3">
+          <Link2Icon className="w-6 h-auto opacity-75" />
           <TextInput
             type="text"
-            name="newDomain"
-            placeholder="Add a custom domain e.g. https://tech.gov.sg"
-            value={formValues.newDomain}
+            name="originalURL"
+            placeholder="Paste your long url here"
+            value={formValues.originalURL}
             onChange={onChange}
             onKeyDown={handleKeyDown}
           />
-          <TextInput
-            type="text"
-            name="alias"
-            placeholder="Add an alias e.g. InternEngagementDay"
-            value={formValues.alias}
-            onChange={onChange}
-            onKeyDown={handleKeyDown}
-          />
-        </div> */}
-        <SubmitButton />
-        <Toaster />
+        </div>
+        <Button variant="default" type="submit" size="lg" className="w-full">
+          {loading ? (
+            <DotsHorizontalIcon className="w-9 h-9 animate-pulse" />
+          ) : (
+            "Shorten URL"
+          )}
+        </Button>
       </form>
+      <Toaster />
     </div>
   );
 }
