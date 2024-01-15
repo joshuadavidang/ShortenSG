@@ -6,7 +6,8 @@ import Landing from "@/components/Landing";
 
 beforeEach(() => {
   jest.spyOn(console, "error");
-  // @ts-ignore jest.spyOn adds this functionallity
+  /* eslint-disable no-console */
+  // @ts-expect-error jest.spyOn adds this functionallity
   console.error.mockImplementation(() => null);
 });
 
@@ -15,7 +16,7 @@ describe("Landing Page", () => {
     const { asFragment } = render(
       <Providers>
         <Landing />
-      </Providers>
+      </Providers>,
     );
     const fragment = asFragment();
     expect(fragment).toMatchSnapshot();
@@ -25,14 +26,14 @@ describe("Landing Page", () => {
     render(
       <Providers>
         <Landing />
-      </Providers>
+      </Providers>,
     );
     expect(
-      screen.getByText("Bid farewell to long and ugly URLs")
+      screen.getByText("Bid farewell to long and ugly URLs"),
     ).toBeInTheDocument();
     expect(screen.getByText("✂️ Shorten them now")).toBeInTheDocument();
     expect(
-      screen.getByText("One step closer to looking credible ⤵")
+      screen.getByText("One step closer to looking credible ⤵"),
     ).toBeInTheDocument();
   });
 });
