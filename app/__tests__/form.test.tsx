@@ -6,7 +6,8 @@ import Form from "@/components/Form";
 
 beforeEach(() => {
   jest.spyOn(console, "error");
-  // @ts-ignore jest.spyOn adds this functionallity
+  /* eslint-disable no-console */
+  // @ts-expect-error jest.spyOn adds this functionallity
   console.error.mockImplementation(() => null);
 });
 
@@ -15,7 +16,7 @@ describe("Form Component", () => {
     const { getByText } = render(
       <Providers>
         <Form />
-      </Providers>
+      </Providers>,
     );
 
     const inputField = screen.getByRole("textbox", { name: "" });
@@ -28,7 +29,7 @@ describe("Form Component", () => {
     render(
       <Providers>
         <Form />
-      </Providers>
+      </Providers>,
     );
     const inputField = screen.getByRole("textbox") as HTMLInputElement;
     const submitBtn = screen.getByRole("button", { name: "Shorten URL" });

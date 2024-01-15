@@ -28,7 +28,7 @@ export default function Result({ id }: any) {
   };
 
   const shortenedLinks = useSelector(
-    (state: RootState) => state.shortenedLinks
+    (state: RootState) => state.shortenedLinks,
   );
 
   const { og_url, short_url }: any = shortenedLinks || {};

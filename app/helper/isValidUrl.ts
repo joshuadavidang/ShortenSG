@@ -1,6 +1,6 @@
 function isValidUrl(url: string): boolean {
   const protocols = ["https", "http"];
-  for (let protocol of protocols) {
+  for (const protocol of protocols) {
     if (!url.includes(protocol)) {
       return false;
     }
@@ -13,7 +13,7 @@ function isValidUrl(url: string): boolean {
       "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
       "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
       "(\\#[-a-z\\d_]*)?$", // fragment locator
-    "i"
+    "i",
   );
   return pattern.test(url);
 }
