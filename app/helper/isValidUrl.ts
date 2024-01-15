@@ -5,6 +5,7 @@ function isValidUrl(url: string): boolean {
       return false;
     }
   }
+
   const pattern = new RegExp(
     "^([a-zA-Z]+:\\/\\/)?" + // protocol
       "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
