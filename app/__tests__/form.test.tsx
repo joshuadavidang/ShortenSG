@@ -1,7 +1,7 @@
-import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Providers } from "@/redux/provider";
 import "@/helper/matchMedia";
+import "@testing-library/jest-dom";
 import Form from "@/components/Form";
 
 beforeEach(() => {
@@ -16,7 +16,7 @@ describe("Form Component", () => {
     const { getByText } = render(
       <Providers>
         <Form />
-      </Providers>,
+      </Providers>
     );
 
     const inputField = screen.getByRole("textbox", { name: "" });
@@ -29,7 +29,7 @@ describe("Form Component", () => {
     render(
       <Providers>
         <Form />
-      </Providers>,
+      </Providers>
     );
     const inputField = screen.getByRole("textbox") as HTMLInputElement;
     const submitBtn = screen.getByRole("button", { name: "Shorten URL" });

@@ -1,15 +1,15 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { TextInput } from "@/components/Input";
-import { GenerateShortUrl, isUrlAvailable } from "@/api";
-import { DotsHorizontalIcon, Link2Icon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
+import { DotsHorizontalIcon, Link2Icon } from "@radix-ui/react-icons";
+import { GenerateShortUrl, isUrlAvailable } from "@/api";
+import { setData } from "@/redux/features/url/urlSlice";
+import { isValidUrl, smoothScrollTo, validateFormLength } from "@/helper";
+import { TextInput } from "@/components/Input";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
-import { isValidUrl, smoothScrollTo, validateFormLength } from "@/helper";
 import { useDispatch } from "react-redux";
-import { setData } from "@/redux/features/url/urlSlice";
+import { useState, useRef } from "react";
 
 export default function Form() {
   const ref = useRef<HTMLFormElement>(null);

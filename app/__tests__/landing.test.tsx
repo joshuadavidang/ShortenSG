@@ -1,8 +1,8 @@
-import "@testing-library/jest-dom";
+import Landing from "@/components/Landing";
 import { render, screen } from "@testing-library/react";
 import { Providers } from "@/redux/provider";
 import "@/helper/matchMedia";
-import Landing from "@/components/Landing";
+import "@testing-library/jest-dom";
 
 beforeEach(() => {
   jest.spyOn(console, "error");
@@ -16,7 +16,7 @@ describe("Landing Page", () => {
     const { asFragment } = render(
       <Providers>
         <Landing />
-      </Providers>,
+      </Providers>
     );
     const fragment = asFragment();
     expect(fragment).toMatchSnapshot();
@@ -26,14 +26,14 @@ describe("Landing Page", () => {
     render(
       <Providers>
         <Landing />
-      </Providers>,
+      </Providers>
     );
     expect(
-      screen.getByText("Bid farewell to long and ugly URLs"),
+      screen.getByText("Bid farewell to long and ugly URLs")
     ).toBeInTheDocument();
     expect(screen.getByText("✂️ Shorten them now")).toBeInTheDocument();
     expect(
-      screen.getByText("One step closer to looking credible ⤵"),
+      screen.getByText("One step closer to looking credible ⤵")
     ).toBeInTheDocument();
   });
 });

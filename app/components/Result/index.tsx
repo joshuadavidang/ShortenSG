@@ -1,5 +1,7 @@
 "use client";
 
+import { CopyIcon } from "@radix-ui/react-icons";
+import { copyText } from "@/helper/copy";
 import {
   Table,
   TableBody,
@@ -9,17 +11,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Toaster, toast } from "sonner";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { CopyIcon } from "@radix-ui/react-icons";
-import { Toaster, toast } from "sonner";
-import { copyText } from "@/helper/copy";
-import { useSelector } from "react-redux";
 import { type RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
 
 export default function Result({ id }: any) {
   const handleCopyURL = (shortUrl: string) => {
@@ -28,7 +28,7 @@ export default function Result({ id }: any) {
   };
 
   const shortenedLinks = useSelector(
-    (state: RootState) => state.shortenedLinks,
+    (state: RootState) => state.shortenedLinks
   );
 
   const { og_url, short_url }: any = shortenedLinks || {};

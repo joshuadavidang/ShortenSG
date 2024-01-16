@@ -1,18 +1,18 @@
 "use client";
 
 import { configureStore } from "@reduxjs/toolkit";
-import urlReducer from "./features/url/urlSlice";
 import storage from "redux-persist/lib/storage";
 import {
-  persistReducer,
-  persistStore,
   FLUSH,
+  REGISTER,
   REHYDRATE,
   PAUSE,
+  persistReducer,
+  persistStore,
   PERSIST,
   PURGE,
-  REGISTER,
 } from "redux-persist";
+import urlReducer from "./features/url/urlSlice";
 
 const persistConfig = {
   key: "root",
