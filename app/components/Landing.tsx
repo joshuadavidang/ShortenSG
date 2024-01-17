@@ -15,7 +15,9 @@ export default function Landing() {
         <div className="mb-6">
           <h1 className="font-bold mb-3">Bid farewell to long and ugly URLs</h1>
           <h2 className="font-semibold mb-3">✂️ Shorten them now</h2>
-          <p className="text-gray-500">One step closer to looking credible ⤵</p>
+          <p className="text-gray-500">
+            One step closer to looking credible ⤵
+          </p>
         </div>
         <Form />
       </div>

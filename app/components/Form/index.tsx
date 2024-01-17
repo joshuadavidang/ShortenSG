@@ -1,10 +1,11 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { DATA } from "@/helpers/enum";
 import { DotsHorizontalIcon, Link2Icon } from "@radix-ui/react-icons";
 import { GenerateShortUrl, isUrlAvailable } from "@/api";
 import { setData } from "@/redux/features/url/urlSlice";
-import { isValidUrl, smoothScrollTo, validateFormLength } from "@/helper";
+import { isValidUrl, smoothScrollTo, validateFormLength } from "@/helpers";
 import { TextInput } from "@/components/Input";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
@@ -42,8 +43,7 @@ export default function Form() {
     setTimeout(async () => {
       const response = await isUrlAvailable(formData);
       const { status, result } = response.data;
-
-      if (status === "Available") {
+      if (status === DATA.AVAILABLE) {
         toast("Check out the short link");
         dispatch(setData(result));
       } else {

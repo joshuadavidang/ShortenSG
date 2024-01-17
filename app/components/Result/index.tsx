@@ -1,7 +1,7 @@
 "use client";
 
 import { CopyIcon } from "@radix-ui/react-icons";
-import { copyText } from "@/helper/copy";
+import { copyText } from "@/helpers/copy";
 import {
   Table,
   TableBody,
@@ -28,7 +28,7 @@ export default function Result({ id }: any) {
   };
 
   const shortenedLinks = useSelector(
-    (state: RootState) => state.shortenedLinks
+    (state: RootState) => state.shortenedLinks,
   );
 
   const { og_url, short_url }: any = shortenedLinks || {};

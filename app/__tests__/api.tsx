@@ -1,5 +1,5 @@
 import axios from "axios";
-import "@/helper/matchMedia";
+import "@/helpers/matchMedia";
 import "@testing-library/jest-dom";
 import { GenerateShortUrl, isUrlAvailable } from "@/api";
 
@@ -11,7 +11,7 @@ describe("APIs", () => {
     const formData = new FormData();
     formData.append(
       "ogUrl",
-      "https://www.crowdtask.gov.sg/quest/budget-meal/infobites"
+      "https://www.crowdtask.gov.sg/quest/budget-meal/infobites",
     );
     mockedAxios.post.mockResolvedValue({
       data: { isExist: true },
@@ -25,7 +25,7 @@ describe("APIs", () => {
     const formData = new FormData();
     formData.append(
       "ogUrl",
-      "https://www.crowdtask.gov.sg/quest/budget-meal/infobites"
+      "https://www.crowdtask.gov.sg/quest/budget-meal/infobites",
     );
     mockedAxios.post.mockResolvedValue({
       data: { url: "https://generated-short-url.com" },

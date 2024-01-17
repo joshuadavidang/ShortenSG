@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input";
-import { KeydownEvent } from "@/helper/type";
+import { KeydownEvent } from "@/helpers/type";
 
 type TextInputProps = {
   type: string;

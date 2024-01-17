@@ -10,7 +10,8 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "prettier": "npx prettier --write .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "validate": "npm run lint & npm run prettier"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.0",
