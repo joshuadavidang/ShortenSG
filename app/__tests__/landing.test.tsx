@@ -33,7 +33,7 @@ describe("Landing Page", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("✂️ Shorten them now")).toBeInTheDocument();
     expect(
-      screen.getByText("One step closer to looking credible ⤵"),
+      screen.getByText("One step closer to getting neat & shareable URL ⤵"),
     ).toBeInTheDocument();
   });
 });
