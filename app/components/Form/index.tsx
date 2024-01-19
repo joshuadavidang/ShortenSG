@@ -3,9 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { DATA } from "@/helpers/enum";
 import { DotsHorizontalIcon, Link2Icon } from "@radix-ui/react-icons";
-import { GenerateShortUrl, isUrlAvailable } from "@/api";
+import { GenerateShortUrl, isUrlAvailable, isValidUrl } from "@/api";
 import { setData } from "@/redux/features/url/urlSlice";
-import { isValidUrl, smoothScrollTo, validateFormLength } from "@/helpers";
+import { smoothScrollTo, validateFormLength } from "@/helpers";
 import { TextInput } from "@/components/Input";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
@@ -35,11 +35,14 @@ export default function Form() {
 
     if (!userInput) return toast("Please enter a value!");
 
-    const result = isValidUrl(url);
+    const response = await isValidUrl(formData);
+    const { result } = response.data;
+
     if (!result) return toast("Ensure that the entered link is valid!");
 
     setLoading(true);
     smoothScrollTo("result");
+
     setTimeout(async () => {
       const response = await isUrlAvailable(formData);
       const { status, result } = response.data;

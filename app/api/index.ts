@@ -1,6 +1,19 @@
 import axios from "axios";
 
-export async function isUrlAvailable(formData: FormData) {
+async function isValidUrl(formData: FormData) {
+  const { originalURL } = Object.fromEntries(formData.entries());
+  const IS_VALID_URL: any = process.env.NEXT_PUBLIC_IS_VALID_URL;
+  try {
+    const result = await axios.post(IS_VALID_URL, {
+      ogUrl: originalURL,
+    });
+    return result;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function isUrlAvailable(formData: FormData) {
   const { originalURL } = Object.fromEntries(formData.entries());
   const LONG_URL_IS_EXIST: any = process.env.NEXT_PUBLIC_LONG_URL_IS_EXIST;
   try {
@@ -13,7 +26,7 @@ export async function isUrlAvailable(formData: FormData) {
   }
 }
 
-export async function GenerateShortUrl(formData: FormData): Promise<any> {
+async function GenerateShortUrl(formData: FormData): Promise<any> {
   const { originalURL } = Object.fromEntries(formData.entries());
   const SEND_DATA: any = process.env.NEXT_PUBLIC_SEND_URL;
   try {
@@ -25,3 +38,5 @@ export async function GenerateShortUrl(formData: FormData): Promise<any> {
     throw err;
   }
 }
+
+export { isValidUrl, isUrlAvailable, GenerateShortUrl };
