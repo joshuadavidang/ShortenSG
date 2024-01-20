@@ -29,8 +29,9 @@
 - Enter the following code
 
   ```
-    NEXT_PUBLIC_SEND_URL=http://localhost:3001/sendUrl
-    NEXT_PUBLIC_LONG_URL_IS_EXIST=http://localhost:3001/isExist
+   NEXT_PUBLIC_IS_VALID_URL=domain/isValidUrl
+   NEXT_PUBLIC_SEND_URL=domain/sendUrl
+   NEXT_PUBLIC_LONG_URL_IS_EXIST=domain/isExist
   ```
 
 4. Run the project in development environment
